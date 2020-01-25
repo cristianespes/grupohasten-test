@@ -9,10 +9,13 @@
 import Foundation
 
 protocol PlayersPresenter: BasePresenter {
+    func setView(_ view: PlayersView)
+    
     func getNumSections() -> Int
     func getTitleFor(_ section: Int) -> String
     func getNumItems(_ section: Int) -> Int
     func getItemFor(_ index: IndexPath) -> Player
+    func itemTapped(_ indexPath: IndexPath)
 }
 
 protocol PlayersView {
@@ -22,5 +25,5 @@ protocol PlayersView {
     func showErrorAlert(message: String)
     func stateData()
     func stateEmpty()
-    func navigateToDetail()
+    func navigateToDetail(player: Player, descriptionSport: String)
 }

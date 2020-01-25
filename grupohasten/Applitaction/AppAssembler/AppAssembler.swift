@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol Assembler: PlayersAssembler { }
+protocol Assembler: PlayersAssembler, PlayerDetailAssembler { }
 
 final class AppAssembler: Assembler { }

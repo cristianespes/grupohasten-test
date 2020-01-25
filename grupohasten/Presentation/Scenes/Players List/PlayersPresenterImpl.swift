@@ -10,18 +10,21 @@ import Foundation
 
 final class PlayersPresenterImpl {
     
-    private let view: PlayersView
+    private var view: PlayersView!
     private let getSportUseCases: GetSportUseCases
     private var sports: [Sport] = []
     
     
-    init(_ view: PlayersView, getSportUseCases: GetSportUseCases) {
-        self.view = view
+    init(getSportUseCases: GetSportUseCases) {
         self.getSportUseCases = getSportUseCases
     }
 }
 
 extension PlayersPresenterImpl: PlayersPresenter {
+    func setView(_ view: PlayersView) {
+        self.view = view
+    }
+    
     func initialize() {
         self.view.setupViews()
     }
@@ -63,5 +66,9 @@ extension PlayersPresenterImpl: PlayersPresenter {
     
     func getItemFor(_ index: IndexPath) -> Player {
         return sports[index.section].players[index.row]
+    }
+    
+    func itemTapped(_ indexPath: IndexPath) {
+        view.navigateToDetail(player: sports[indexPath.section].players[indexPath.row], descriptionSport: sports[indexPath.section].title)
     }
 }

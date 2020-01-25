@@ -16,14 +16,18 @@ final class PlayersViewController: UIViewController {
     @IBOutlet weak var emptyLabel: UILabel!
     
     // MARK: - Properties
-    var presenter: PlayersPresenter!
+    private let presenter: PlayersPresenter
+    private let navigator: PlayerDetailAssembler
     
     
     // MARK: - LifeCycle
-    init() {
+    init(presenter: PlayersPresenter, navigator: PlayerDetailAssembler) {
+        self.presenter = presenter
+        self.navigator = navigator
+        
         super.init(nibName: nil, bundle: nil)
         
-        presenter = PlayersPresenterImpl(self, getSportUseCases: GetSportUseCases(sportRepository: SportRepository(remoteDataSource: ApiMyJsonDataSource())))
+        self.presenter.setView(self)
     }
     
     required init?(coder: NSCoder) {
@@ -43,6 +47,7 @@ extension PlayersViewController: PlayersView {
     func setupViews() {
         setupNavigationController()
         setupTableView()
+        setupEmptyLabel()
     }
     
     func startLoading() {
@@ -82,8 +87,10 @@ extension PlayersViewController: PlayersView {
         tableView.isHidden = true
     }
     
-    func navigateToDetail() {
-        // TODO: IMPLEMENTAR
+    func navigateToDetail(player: Player, descriptionSport: String) {
+        let viewController: PlayerDetailViewController = navigator.resolve(player: player, descriptionSport: descriptionSport)
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -112,7 +119,7 @@ extension PlayersViewController: UITableViewDataSource {
 
 extension PlayersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: IMPLEMENTAR
+        presenter.itemTapped(indexPath)
     }
 }
 
@@ -133,5 +140,10 @@ private extension PlayersViewController {
         tableView.separatorStyle = .none
         
         tableView.register(PlayerTableViewCell.nib, forCellReuseIdentifier: PlayerTableViewCell.identifier)
+    }
+    
+    func setupEmptyLabel() {
+        emptyLabel.textAlignment = .center
+        emptyLabel.textColor = .gray
     }
 }

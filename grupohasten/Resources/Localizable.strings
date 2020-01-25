@@ -3,3 +3,7 @@
 "app.grupohasten.warning" = "Atención";
 "app.grupohasten.accept" = "Aceptar";
 "app.grupohasten.error_bad_request" = "Ha ocurrido un error con la solicitud. Por favor, inténtelo de nuevo más tarde.";
+"app.grupohasten.name" = "Name";
+"app.grupohasten.surname" = "Surname";
+"app.grupohasten.date" = "Date";
+"app.grupohasten.sport" = "Sport";

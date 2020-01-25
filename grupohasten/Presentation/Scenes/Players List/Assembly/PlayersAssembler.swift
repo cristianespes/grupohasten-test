@@ -20,13 +20,14 @@ protocol PlayersAssembler {
     func resolve() -> RemoteDataSource
 }
 
-extension PlayersAssembler {
+extension PlayersAssembler where Self: Assembler {
+    
     func resolve() -> PlayersViewController {
-        return PlayersViewController()
+        return PlayersViewController(presenter: resolve(), navigator: self)
     }
     
     func resolve() -> PlayersPresenter {
-        return PlayersPresenterImpl(resolve(), getSportUseCases: resolve())
+        return PlayersPresenterImpl(getSportUseCases: resolve())
     }
     
     func resolve() -> GetSportUseCases {
