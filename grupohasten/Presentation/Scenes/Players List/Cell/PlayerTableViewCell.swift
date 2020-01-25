@@ -68,6 +68,8 @@ private extension PlayerTableViewCell {
         selectionStyle = .none
         
         playerImageView.contentMode = .scaleAspectFill
+        playerImageView.layer.cornerRadius = 8
+        
         dateLabel.textColor = .gray
     }
 }
